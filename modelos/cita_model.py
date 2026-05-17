@@ -61,3 +61,40 @@ class CitaModel:
                 return cursor.lastrowid
         except sqlite3.Error as e:
             raise DatabaseError(f"Error al crear cita: {e}")
+
+    @staticmethod
+    def delete(id_cita: int):
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM citas WHERE id_cita = ?", (id_cita,))
+            if cursor.rowcount == 0:
+                raise NotFoundError(f"Cita con ID {id_cita} no encontrada.")
+
+    @staticmethod
+    def update_estado(id_cita: int, estado: str):
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE citas SET estado = ? WHERE id_cita = ?",
+                (estado, id_cita)
+            )
+            if cursor.rowcount == 0:
+                raise NotFoundError(f"Cita con ID {id_cita} no encontrada.")
+
+    @staticmethod
+    def get_medico_con_mas_citas():
+        query = """
+            SELECT m.nombre, COUNT(c.id_cita) as total_citas
+            FROM medicos m
+            LEFT JOIN citas c ON m.id_medico = c.id_medico
+            GROUP BY m.id_medico, m.nombre
+            ORDER BY total_citas DESC
+            LIMIT 1
+        """
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query)
+            row = cursor.fetchone()
+
+            return dict(row) if row else None
+    
