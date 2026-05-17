@@ -45,9 +45,9 @@ def _crear_medico():
     
     try:
         MedicoService.crear_medico(nombre, especialidad)
-        print("\n✅ Médico creado correctamente.")
+        print("\nMédico creado correctamente.")
     except HospitalManagerError as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
     input("\nPresiona Enter para continuar...")
 
 def _actualizar_medico():
@@ -61,9 +61,9 @@ def _actualizar_medico():
     
     try:
         MedicoService.actualizar_medico(id_medico, nombre, especialidad)
-        print("\n✅ Médico actualizado correctamente.")
+        print("\nMédico actualizado correctamente.")
     except HospitalManagerError as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
     input("\nPresiona Enter para continuar...")
 
 def _eliminar_medico():
@@ -74,7 +74,7 @@ def _eliminar_medico():
     
     try:
         MedicoService.eliminar_medico(id_medico)
-        print("\n✅ Médico eliminado correctamente.")
+        print("\nMédico eliminado correctamente.")
     except HospitalManagerError as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\nError: {e}")
     input("\nPresiona Enter para continuar...")
