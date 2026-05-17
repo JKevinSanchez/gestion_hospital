@@ -26,6 +26,7 @@ def menu_medicos():
             break
 
 def _listar_medicos():
+    """Muestra la tabla con todos los médicos registrados."""
     clear_screen()
     print_header("LISTADO DE MÉDICOS")
     medicos = MedicoService.listar_medicos()
@@ -38,6 +39,7 @@ def _listar_medicos():
     input("Presiona Enter para continuar...")
 
 def _crear_medico():
+    """Registra un nuevo médico pidiendo datos por consola."""
     clear_screen()
     print_header("NUEVO MÉDICO")
     nombre = input("Nombre del médico: ")
@@ -51,6 +53,7 @@ def _crear_medico():
     input("\nPresiona Enter para continuar...")
 
 def _actualizar_medico():
+    """Modifica el nombre y especialidad de un médico por su ID."""
     clear_screen()
     print_header("ACTUALIZAR MÉDICO")
     id_medico = input_int("ID del médico a actualizar (0 para cancelar)")
@@ -67,6 +70,7 @@ def _actualizar_medico():
     input("\nPresiona Enter para continuar...")
 
 def _eliminar_medico():
+    """Elimina un médico del sistema usando su ID."""
     clear_screen()
     print_header("ELIMINAR MÉDICO")
     id_medico = input_int("ID del médico a eliminar (0 para cancelar)")
