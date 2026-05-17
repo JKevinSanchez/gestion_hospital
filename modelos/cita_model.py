@@ -1,4 +1,4 @@
-from database.connection import get_db_connection
+from database.conexion import get_db_connection
 from utilidades.excepciones import DatabaseError, NotFoundError
 import sqlite3
 
