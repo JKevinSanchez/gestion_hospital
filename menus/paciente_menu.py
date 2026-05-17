@@ -47,7 +47,7 @@ def _crear_paciente():
         PacienteService.crear_paciente(nombre, dni, telefono, fecha)
         print("\nPaciente creado correctamente.")
     except HospitalManagerError as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
     
     input("\nPresiona Enter para continuar...")
 
