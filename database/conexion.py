@@ -5,7 +5,7 @@ import os
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'hospital.db')
 
 @contextmanager
-def get_db_conexion():
+def get_db_connection():
     """
     Context manager para manejar la conexión a la base de datos.
     Asegura que la conexión se cierra, ejecuta commit en éxito y rollback en error.
