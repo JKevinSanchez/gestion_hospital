@@ -34,7 +34,7 @@ def init_db():
             conn.executescript(f.read())
         conn.commit()
 
-def semilla_db():
+def seed_db():
     """Puebla la base de datos con datos iniciales si está vacía."""
     semilla_path = os.path.join(os.path.dirname(__file__), 'semilla.sql')
     if not os.path.exists(semilla_path):
