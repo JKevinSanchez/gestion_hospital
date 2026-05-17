@@ -4,7 +4,8 @@ import sqlite3
 
 class CitaModel:
     @staticmethod
-    def get_all_details():
+    def get_all_with_details():
+        # Trae la información combinada uniendo las tablas mediante INNER JOIN para mostrar nombres reales
         query = """
             SELECT c.id_cita, p.nombre AS paciente, m.nombre AS medico, c.fecha, c.estado
             FROM citas c
@@ -26,17 +27,16 @@ class CitaModel:
                 (id_medico, fecha)
             )
             count = cursor.fetchone()[0]
+            # Devuelve True si el contador es cero, lo que significa que el horario está libre
             return count == 0
 
     @staticmethod
     def create_with_transaction(id_paciente: int, id_medico: int, fecha: str):
-        # Esta es la implementación de la transacción: verificar disponibilidad e insertar.
-        # En caso de error, el get_db_connection context manager hace rollback automáticamente.
         try:
             with get_db_connection() as conn:
                 cursor = conn.cursor()
                 
-                # 1. Verificar si el paciente y médico existen (validación extra para evitar violar FK antes de llegar a la inserción si es posible)
+                # 1. Validación manual de la existencia de las claves foráneas (FK)
                 cursor.execute("SELECT 1 FROM pacientes WHERE id_paciente = ?", (id_paciente,))
                 if not cursor.fetchone():
                      raise DatabaseError(f"Paciente con ID {id_paciente} no existe.")
@@ -45,7 +45,7 @@ class CitaModel:
                 if not cursor.fetchone():
                      raise DatabaseError(f"Médico con ID {id_medico} no existe.")
 
-                # 2. Verificar disponibilidad de nuevo (dentro de la transacción)
+                # 2. Re-verificación de disponibilidad para bloquear el recurso y evitar condiciones de carrera (Race Conditions)
                 cursor.execute(
                     "SELECT COUNT(*) FROM citas WHERE id_medico = ? AND fecha = ?",
                     (id_medico, fecha)
@@ -53,7 +53,7 @@ class CitaModel:
                 if cursor.fetchone()[0] > 0:
                     raise DatabaseError("El médico ya tiene una cita en esa fecha y hora.")
                 
-                # 3. Insertar
+                # 3. Inserción del registro tras superar todas las validaciones de negocio
                 cursor.execute(
                     "INSERT INTO citas (id_paciente, id_medico, fecha) VALUES (?, ?, ?)",
                     (id_paciente, id_medico, fecha)
@@ -83,6 +83,7 @@ class CitaModel:
 
     @staticmethod
     def get_medico_con_mas_citas():
+        # Utiliza LEFT JOIN y agregación (COUNT/GROUP BY) para calcular estadísticas, incluyendo médicos sin citas
         query = """
             SELECT m.nombre, COUNT(c.id_cita) as total_citas
             FROM medicos m
@@ -95,6 +96,4 @@ class CitaModel:
             cursor = conn.cursor()
             cursor.execute(query)
             row = cursor.fetchone()
-
             return dict(row) if row else None
-    
