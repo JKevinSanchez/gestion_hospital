@@ -1,4 +1,4 @@
-# 🏥 Sistema de Gestión Hospitalaria
+#  Sistema de Gestión Hospitalaria
 
 Una aplicación de consola robusta desarrollada en Python para la gestión integral de un centro médico. Permite administrar pacientes, médicos y citas utilizando una base de datos relacional SQLite y una arquitectura de software modular basada en capas (Modelos, Servicios, Vistas).
 
@@ -57,6 +57,7 @@ gestion_hospitales/
     ├── ayudas.py           # Funciones UI: Limpiar pantalla, inputs seguros y tablas ASCII
     ├── excepciones.py      # Clases de error personalizadas
     └── validadores.py      # Funciones de sanitización de strings y comprobación de regex
+```
 
 ---
 
