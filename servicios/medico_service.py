@@ -15,7 +15,7 @@ class MedicoService:
     @staticmethod
     def listar_medicos():
         # Recupera todos los médicos registrados del modelo
-        return MedicoModel.get_all_details()
+        return MedicoModel.get_all()
 
     @staticmethod
     def actualizar_medico(id_medico: int, nombre: str, especialidad: str):
