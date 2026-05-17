@@ -24,3 +24,44 @@ def menu_medicos():
             _eliminar_medico()
         elif opcion == '0':
             break
+
+def _listar_medicos():
+    clear_screen()
+    print_header("LISTADO DE MÉDICOS")
+    medicos = MedicoService.listar_medicos()
+    if medicos:
+        headers = ["ID", "Nombre", "Especialidad"]
+        rows = [[m['id_medico'], m['nombre'], m['especialidad']] for m in medicos]
+        print_table(headers, rows)
+    else:
+        print("No hay médicos registrados.")
+    input("Presiona Enter para continuar...")
+
+def _crear_medico():
+    clear_screen()
+    print_header("NUEVO MÉDICO")
+    nombre = input("Nombre del médico: ")
+    especialidad = input("Especialidad: ")
+    
+    try:
+        MedicoService.crear_medico(nombre, especialidad)
+        print("\n✅ Médico creado correctamente.")
+    except HospitalManagerError as e:
+        print(f"\n❌ Error: {e}")
+    input("\nPresiona Enter para continuar...")
+
+def _actualizar_medico():
+    clear_screen()
+    print_header("ACTUALIZAR MÉDICO")
+    id_medico = input_int("ID del médico a actualizar (0 para cancelar)")
+    if id_medico == 0: return
+    
+    nombre = input("Nuevo nombre: ")
+    especialidad = input("Nueva especialidad: ")
+    
+    try:
+        MedicoService.actualizar_medico(id_medico, nombre, especialidad)
+        print("\n✅ Médico actualizado correctamente.")
+    except HospitalManagerError as e:
+        print(f"\n❌ Error: {e}")
+    input("\nPresiona Enter para continuar...")
