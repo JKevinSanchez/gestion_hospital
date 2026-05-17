@@ -65,3 +65,16 @@ def _actualizar_medico():
     except HospitalManagerError as e:
         print(f"\n❌ Error: {e}")
     input("\nPresiona Enter para continuar...")
+
+def _eliminar_medico():
+    clear_screen()
+    print_header("ELIMINAR MÉDICO")
+    id_medico = input_int("ID del médico a eliminar (0 para cancelar)")
+    if id_medico == 0: return
+    
+    try:
+        MedicoService.eliminar_medico(id_medico)
+        print("\n✅ Médico eliminado correctamente.")
+    except HospitalManagerError as e:
+        print(f"\n❌ Error: {e}")
+    input("\nPresiona Enter para continuar...")
