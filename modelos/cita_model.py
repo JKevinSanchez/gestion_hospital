@@ -1,5 +1,5 @@
 from database.connection import get_db_connection
-from utils.exceptions import DatabaseError, NotFoundError
+from utilidades.excepciones import DatabaseError, NotFoundError
 import sqlite3
 
 class CitaModel:

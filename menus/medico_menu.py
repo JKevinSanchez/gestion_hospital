@@ -1,6 +1,6 @@
-from services.medico_service import MedicoService
-from utils.helpers import clear_screen, print_header, print_table, input_int
-from utils.exceptions import HospitalManagerError
+from servicios.medico_service import MedicoService
+from utilidades.ayudas import clear_screen, print_header, print_table, input_int
+from utilidades.excepciones import HospitalManagerError
 
 def menu_medicos():
     while True:
